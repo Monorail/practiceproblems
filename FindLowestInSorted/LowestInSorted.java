@@ -12,24 +12,39 @@ public class LowestInSorted{
         }
         
         // contrast array before and after
+        int lowest = -1;
         Arrays.sort(number_arr);
-        print_int_arr(number_arr);
-        quick_rotate_array(number_arr, 2);
+        for(int i = 0; i < 3; i++){
+            print_int_arr(number_arr);
+            lowest = find_lowest(number_arr);
+            System.out.println("lowest: " + lowest);
+            quick_rotate_array(number_arr, (NUM_ELEMS)/3-1);   
+        }
+        
+        
+    }
+    
+    public static int find_lowest(int[] arr){
         int left = 0;
-        int right = number_arr.length-1;
-        for(int i = 0; i < 10; i++) {
-            print_int_arr(Arrays.copyOfRange(number_arr, left, right));
-            if(number_arr[left] <= number_arr[right]){
-                System.out.println(left);
-                break;
+        int right = arr.length-1;
+        while(true) {
+            // print_int_arr(Arrays.copyOfRange(arr, left, right+1));
+            int mid = left + (right - left)/2;
+            if(arr[left] <= arr[right]){
+                // System.out.println("lowest: " + arr[left]);
+                return arr[left];
             }
-            int mid = (right - left)/2;
-            if(number_arr[mid] < number_arr[left])
+            if(left == mid){
+                // System.out.println("lowest: " + arr[right]);
+                return arr[right];
+            }
+            if(arr[mid] < arr[left])
                 right = mid;
             else
                 left = mid;
         }
     }
+    
     //calls subfunction rotate 'steps' times
     public static void long_rotate_array(int[] arr, int steps){
         for(int i = 0; i < steps; i++){
